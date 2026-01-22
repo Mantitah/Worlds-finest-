@@ -1,0 +1,10 @@
+[
+  {"id":1,"name":"Summer Tee","price":32.00,"image":"https://via.placeholder.com/800x600?text=Summer+Tee","description":"Lightweight cotton tee, unisex.","category":"Tops"},
+  {"id":2,"name":"Logo Hoodie","price":85.00,"image":"https://via.placeholder.com/800x600?text=Logo+Hoodie","description":"Brushed interior, oversized fit.","category":"Tops"},
+  {"id":3,"name":"Canvas Tote","price":18.00,"image":"https://via.placeholder.com/800x600?text=Canvas+Tote","description":"Durable cotton tote bag.","category":"Accessories"},
+  {"id":4,"name":"Handmade Mug","price":24.00,"image":"https://via.placeholder.com/800x600?text=Handmade+Mug","description":"Stoneware mug, dishwasher safe.","category":"Accessories"},
+  {"id":5,"name":"Small Batch Coffee","price":14.50,"image":"https://via.placeholder.com/800x600?text=Coffee","description":"Freshly roasted single-origin beans.","category":"Consumables"},
+  {"id":6,"name":"Organic Soap","price":6.75,"image":"https://via.placeholder.com/800x600?text=Soap","description":"Scented with natural essential oils.","category":"Consumables"},
+  {"id":7,"name":"Canvas Jacket","price":120.00,"image":"https://via.placeholder.com/800x600?text=Canvas+Jacket","description":"Durable jacket with button closure.","category":"Tops"},
+  {"id":8,"name":"Limited Poster","price":40.00,"image":"https://via.placeholder.com/800x600?text=Poster","description":"Signed limited edition poster.","category":"Accessories"}
+]

@@ -1,0 +1,154 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 2. v2.0 | 20110126
+  License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+
+body{
+    flex-direction: row;
+}
+
+/* Store styles */
+.site-header{
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: transparent;
+  border: none;
+  z-index: 40;
+}
+.brand{display:flex;align-items:center;gap:8px}
+.logo-mark{height:40px}
+.logo-type{height:22px}
+.site-title{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;font-size:13px;margin:0;color:#111;font-weight:600}
+
+.store{display:flex;gap:24px;padding:24px;padding-top:96px;max-width:1100px;margin:0 auto}
+.products{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.product{border:1px solid #ececec;padding:12px;border-radius:8px;background:#fff;display:flex;flex-direction:column}
+.product img{width:100%;height:160px;object-fit:cover;border-radius:6px;margin-bottom:8px}
+.product h3{font-size:16px;margin-bottom:6px}
+.product .price{font-weight:600;margin-bottom:8px}
+.btn{background:#111;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+
+.cart{width:320px;border-left:1px solid #eee;padding-left:16px}
+.cart h2{margin-bottom:12px}
+.cart-item{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.cart-item img{width:56px;height:56px;object-fit:cover;border-radius:6px}
+.cart-item .meta{flex:1}
+.cart-footer{margin-top:12px;display:flex;justify-content:space-between;align-items:center}
+
+@media (max-width:900px){
+  .site-header{position:static;top:auto;right:auto;padding:12px;background:#fafafa;border-bottom:1px solid #eee}
+  .store{flex-direction:column;padding-top:24px}
+  .cart{width:100%;border-left:none;padding-left:0;border-top:1px solid #eee;padding-top:12px}
+}
+
+/* Header compact logo */
+.header-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-mark{display:none}
+.logo-type{height:18px;width:auto;display:block}
+
+/* Hero image styles */
+.hero-logo{width:240px;max-width:60vw;height:auto;display:block;margin:0 auto;opacity:1}
+.hero-type{display:block;margin:18px auto 0;height:20px;width:auto}
+.hero-inner{cursor:pointer}
+.header-nav{margin-left:8px}
+.nav-link{color:#111;text-decoration:none;font-size:13px;padding:6px}
+
+/* Hero screen */
+.hero{display:flex;align-items:center;justify-content:center;height:60vh;min-height:520px;background:#fff}
+.hero-inner{text-align:center}
+.hero-ring{width:220px;height:220px;border-radius:50%;box-shadow:0 0 0 8px rgba(255,77,158,0.12),0 0 0 14px rgba(255,123,179,0.06);background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0));margin:0 auto}
+.hero-title{margin-top:20px;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;font-size:12px;letter-spacing:6px;color:#111}
+
+/* Hide hero when not active */
+.hidden{display:none !important}
+
+/* Shop page frame 2 styles */
+.shop-layout{display:grid;grid-template-columns:320px 1fr 220px;gap:40px;align-items:start;padding:48px 28px;max-width:1400px;margin:0 auto}
+
+.product-cascade{display:flex;flex-direction:column;gap:18px}
+.product-cascade .cascade-item{overflow:hidden;border-radius:6px}
+.product-cascade img{width:100%;height:180px;object-fit:cover;display:block}
+
+.product-columns{display:block}
+.product-columns-inner{position:sticky;top:100px}
+.shop-nav{display:flex;gap:18px;align-items:center;border-bottom:1px solid #f0f0f0;padding-bottom:10px;margin-bottom:12px}
+.shop-nav-link{text-decoration:none;color:#111;font-size:13px;text-transform:uppercase;letter-spacing:1px}
+
+.product-list{display:flex;flex-direction:column;gap:18px}
+.product-card{display:grid;grid-template-columns:220px 1fr;gap:16px;align-items:center;padding:14px;border-radius:6px;border:1px solid #f5f5f5;background:#fff}
+.product-card img{width:220px;height:160px;object-fit:cover;border-radius:6px}
+.product-info h3{margin:0 0 6px 0;font-size:15px}
+.product-info .price{font-weight:700;color:#111}
+.product-info .meta{margin-top:8px}
+.product-card .actions{display:flex;gap:8px;align-items:center}
+.qty-input{width:64px;padding:6px;border:1px solid #e6e6e6;border-radius:4px}
+.grid-qty .qty-input{width:56px}
+.cart-item .subtotal{font-size:13px;color:#333;margin-top:6px}
+
+.right-nav{border-left:1px solid #f0f0f0;padding-left:18px}
+.right-nav-inner{position:sticky;top:110px}
+.right-links{display:flex;flex-direction:column;gap:8px}
+.right-link{text-decoration:none;color:#111}
+
+@media (max-width:1100px){
+  .shop-layout{grid-template-columns:220px 1fr;}
+  .product-card{grid-template-columns:160px 1fr}
+  .product-card img{width:160px;height:120px}
+}
+
+@media (max-width:900px){
+  .shop-layout{grid-template-columns:1fr;padding:16px}
+  .product-cascade{order:2}
+  .product-columns{order:1}
+  .right-nav{order:3;border-left:none;padding-left:0}
+}

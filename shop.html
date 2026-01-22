@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Shop — Worlds Finest</title>
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+  </head>
+  <body>
+    <header class="site-header" role="banner">
+      <a href="index.html" class="header-logo" id="header-logo" aria-label="Worlds Finest home">
+        <img src="images/logo type component.svg" alt="Worlds Finest wordmark" class="logo-type">
+      </a>
+      <nav class="header-nav" aria-label="Main">
+        <a href="index.html" class="nav-link">Home</a>
+      </nav>
+    </header>
+
+    <main class="store">
+        <section class="shop-layout three-col">
+          <div class="product-cascade" id="product-cascade">
+            <!-- cascade of product images populated by JS -->
+          </div>
+
+          <div class="product-columns">
+            <div class="product-columns-inner">
+              <div class="shop-nav">
+                <a href="#" class="shop-nav-link">All products</a>
+                <a href="#" class="shop-nav-link">Summer 2024</a>
+                <a href="#" class="shop-nav-link">Limited</a>
+              </div>
+
+              <div class="product-list" id="product-list">
+                <!-- Product info columns rendered here by JS -->
+              </div>
+            </div>
+          </div>
+
+          <aside class="right-nav">
+            <div class="right-nav-inner">
+              <h4>Menu</h4>
+              <nav class="right-links">
+                <a href="#" class="right-link">Overview</a>
+                <a href="#" class="right-link">Sizing</a>
+                <a href="#" class="right-link">FAQ</a>
+              </nav>
+            </div>
+          </aside>
+        </section>
+
+      <aside class="cart" id="cart">
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-footer">
+          <div class="total">Total: $<span id="cart-total">0.00</span></div>
+          <button id="checkout" class="btn">Checkout</button>
+        </div>
+      </aside>
+    </main>
+
+    <script src="assets/scripts/main.js"></script>
+  </body>
+</html>

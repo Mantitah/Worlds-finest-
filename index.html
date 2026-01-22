@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Worlds Finest — Store</title>
+        <link rel="stylesheet" href="assets/stylesheets/main.css">
+    </head>
+    <body>
+        <header class="site-header" role="banner">
+            <a href="index.html" class="header-logo" id="header-logo" aria-label="Worlds Finest home">
+                <img src="images/logo type component.svg" alt="Worlds Finest wordmark" class="logo-type">
+            </a>
+            <nav class="header-nav" aria-label="Main">
+                <a href="shop.html" class="nav-link">Shop</a>
+            </nav>
+        </header>
+
+        <section class="hero" id="hero" aria-hidden="false">
+            <div class="hero-inner" role="link" tabindex="0" aria-label="Enter shop (click)">
+                <img src="images/logo mark componet.png" alt="Worlds Finest mark" class="hero-logo">
+                <img src="images/logo type component.svg" alt="Worlds Finest wordmark" class="hero-type">
+            </div>
+        </section>
+
+        <main class="store">
+            <section class="products" id="products">
+                <!-- Products will be rendered here -->
+            </section>
+
+            <aside class="cart" id="cart">
+                <h2>Your Cart</h2>
+                <div id="cart-items"></div>
+                <div class="cart-footer">
+                    <div class="total">Total: $<span id="cart-total">0.00</span></div>
+                    <button id="checkout" class="btn">Checkout</button>
+                </div>
+            </aside>
+        </main>
+
+        <script src="assets/scripts/main.js"></script>
+    </body>
+</html>
