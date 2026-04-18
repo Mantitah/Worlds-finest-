@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Checkout — Worlds Finest</title>
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body class="checkout-page">
+    <header class="site-header" role="banner">
+      <a href="index.html" class="header-logo" id="header-logo" aria-label="Worlds Finest home">
+        <img src="images/logo type component.svg" alt="Worlds Finest wordmark" class="logo-type">
+      </a>
+      <nav class="header-nav" aria-label="Main">
+        <a href="shop.html" class="nav-link">Shop</a>
+        <a href="policies.html" class="nav-link">Info</a>
+        <a href="checkout.html" class="nav-link cart-link" aria-label="View cart">
+          Cart <span id="cart-count" class="cart-badge">0</span>
+        </a>
+      </nav>
+    </header>
+
+    <main class="checkout">
+      <section class="checkout-summary" id="checkout-summary">
+        <h1>Checkout</h1>
+        
+        <div id="order-items"></div>
+        <div class="checkout-total">Total: $<span id="checkout-total">0.00</span></div>
+
+        <form id="payment-form" class="payment-form hidden">
+          <h2>Shipping & Payment</h2>
+          
+          <div class="form-section">
+            <h3>Shipping Information</h3>
+            <div class="form-group">
+              <label for="customer-name">Full Name</label>
+              <input type="text" id="customer-name" name="name" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label for="customer-email">Email</label>
+              <input type="email" id="customer-email" name="email" required placeholder="john@example.com">
+            </div>
+            <div class="form-group">
+              <label for="customer-address">Address</label>
+              <input type="text" id="customer-address" name="address" required placeholder="123 Main St">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customer-city">City</label>
+                <input type="text" id="customer-city" name="city" required placeholder="New York">
+              </div>
+              <div class="form-group">
+                <label for="customer-state">State</label>
+                <input type="text" id="customer-state" name="state" required placeholder="NY">
+              </div>
+              <div class="form-group">
+                <label for="customer-zip">ZIP</label>
+                <input type="text" id="customer-zip" name="zip" required placeholder="10001">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Payment Details</h3>
+            <div id="payment-element"></div>
+            <div id="payment-message" class="hidden"></div>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn btn-primary">Pay Now</button>
+        </form>
+
+        <button id="proceed-payment" class="btn btn-primary">Proceed to Payment</button>
+        
+        <div id="thank-you" class="thank-you hidden">
+          <h2>Thank you!</h2>
+          <p>Your order is confirmed. We'll email you a receipt shortly.</p>
+          <a href="index.html" class="btn">Continue shopping</a>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets/scripts/main.js"></script>
+    <script src="assets/scripts/checkout.js"></script>
+    <script src="assets/scripts/info.js"></script>
+    
+  </body>
+</html>

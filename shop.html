@@ -13,6 +13,10 @@
       </a>
       <nav class="header-nav" aria-label="Main">
         <a href="index.html" class="nav-link">Home</a>
+        <a href="policies.html" class="nav-link">Info</a>
+        <a href="checkout.html" class="nav-link cart-link" aria-label="View cart">
+          Cart <span id="cart-count" class="cart-badge">0</span>
+        </a>
       </nav>
     </header>
 
@@ -25,9 +29,22 @@
           <div class="product-columns">
             <div class="product-columns-inner">
               <div class="shop-nav">
-                <a href="#" class="shop-nav-link">All products</a>
-                <a href="#" class="shop-nav-link">Summer 2024</a>
-                <a href="#" class="shop-nav-link">Limited</a>
+                <div class="shop-nav-left">
+                  <a href="#" class="shop-nav-link">All products</a>
+                  <a href="#" class="shop-nav-link">Summer 2024</a>
+                  <a href="#" class="shop-nav-link">Limited</a>
+                </div>
+                <div class="shop-sort">
+                  <label for="sort-select" class="sort-label">Sort</label>
+                  <select id="sort-select" class="sort-select">
+                    <option value="default">Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Name A→Z</option>
+                    <option value="name-desc">Name Z→A</option>
+                  </select>
+                  <button id="reset-sort" class="btn-reset">Reset</button>
+                </div>
               </div>
 
               <div class="product-list" id="product-list">
@@ -38,11 +55,12 @@
 
           <aside class="right-nav">
             <div class="right-nav-inner">
-              <h4>Menu</h4>
+              <h4>Categories</h4>
               <nav class="right-links">
-                <a href="#" class="right-link">Overview</a>
-                <a href="#" class="right-link">Sizing</a>
-                <a href="#" class="right-link">FAQ</a>
+                <a href="#" class="right-link">All</a>
+                <a href="#" class="right-link">Tops</a>
+                <a href="#" class="right-link">Accessories</a>
+                <a href="#" class="right-link">Consumables</a>
               </nav>
             </div>
           </aside>
@@ -59,5 +77,6 @@
     </main>
 
     <script src="assets/scripts/main.js"></script>
+    <script src="assets/scripts/info.js"></script>
   </body>
 </html>

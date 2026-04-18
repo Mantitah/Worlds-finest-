@@ -19,8 +19,34 @@ function filterProducts(products, category){
   return products.filter(p=>p.category === category)
 }
 
+function setActiveFilter(filter){
+  ;[...document.querySelectorAll('.left-nav-link, .shop-nav-link, .right-link')].forEach(el=>{
+    el.classList.toggle('active', el.textContent.trim() === filter || (filter===null && (el.textContent.trim()==='All' || el.textContent.trim()==='All products')))
+  })
+}
+
+const PREFS_KEY = 'wf_prefs_v1'
+function loadPrefs(){
+  try{return JSON.parse(localStorage.getItem(PREFS_KEY))||{sort:'default',filter:null}}
+  catch{return {sort:'default',filter:null}}
+}
+function savePrefs(){localStorage.setItem(PREFS_KEY,JSON.stringify({sort:CURRENT_SORT,filter:CURRENT_FILTER}))}
+
+let CURRENT_SORT = 'default'
+
+function sortProducts(products, sort){
+  const sorted = [...products]
+  if(sort==='price-asc') sorted.sort((a,b)=>a.price-b.price)
+  if(sort==='price-desc') sorted.sort((a,b)=>b.price-a.price)
+  if(sort==='name-asc') sorted.sort((a,b)=>a.name.localeCompare(b.name))
+  if(sort==='name-desc') sorted.sort((a,b)=>b.name.localeCompare(a.name))
+  return sorted
+}
+
 function renderProducts(products){
-  const filtered = filterProducts(products, CURRENT_FILTER)
+  let filtered = filterProducts(products, CURRENT_FILTER)
+  filtered = sortProducts(filtered, CURRENT_SORT)
+  setActiveFilter(CURRENT_FILTER)
   // populate traditional grid if present
   const container = $('#products')
   if(container){
@@ -82,6 +108,11 @@ function loadCart(){
 }
 function saveCart(c){localStorage.setItem(CART_KEY,JSON.stringify(c))}
 
+// keep a global reference for other scripts (e.g., checkout flow)
+function setGlobalCart(c){
+  try{ window.CART = c }catch(e){}
+}
+
 function cartTotal(cart, products){
   let total = 0
   Object.entries(cart).forEach(([id,q])=>{
@@ -91,7 +122,16 @@ function cartTotal(cart, products){
   return total
 }
 
+function updateCartBadge(cart){
+  const badge = document.getElementById('cart-count')
+  if(!badge) return
+  const totalItems = Object.values(cart).reduce((sum,v)=>sum+v,0)
+  badge.textContent = totalItems
+  badge.style.display = totalItems > 0 ? 'inline-block' : 'none'
+}
+
 function renderCart(cart, products){
+  updateCartBadge(cart)
   const el = $('#cart-items')
   el.innerHTML = ''
   Object.entries(cart).forEach(([id,q])=>{
@@ -134,14 +174,63 @@ function renderProductTable(products, cart){
   })
 }
 
+function renderCheckoutSummary(cart, products){
+  const container = document.getElementById('order-items')
+  if(!container) return
+  container.innerHTML = ''
+  Object.entries(cart).forEach(([id,q])=>{
+    const p = products.find(x=>String(x.id)===String(id))
+    if(!p) return
+    const item = document.createElement('div')
+    item.className = 'checkout-item'
+    item.innerHTML = `
+      <div class="checkout-item-name">${p.name} × ${q}</div>
+      <div class="checkout-item-price">$${formatPrice(p.price * q)}</div>
+    `
+    container.appendChild(item)
+  })
+  const total = cartTotal(cart, products)
+  const totalEl = document.getElementById('checkout-total')
+  if(totalEl) totalEl.textContent = formatPrice(total)
+}
+
 document.addEventListener('DOMContentLoaded', async ()=>{
   const products = await loadProducts()
+  
+  // restore saved preferences
+  const prefs = loadPrefs()
+  CURRENT_SORT = prefs.sort
+  CURRENT_FILTER = prefs.filter
+  
   renderProducts(products)
 
+  const sortSelect = document.getElementById('sort-select')
+  const resetSort = document.getElementById('reset-sort')
+  if(sortSelect){
+    sortSelect.value = CURRENT_SORT
+    sortSelect.addEventListener('change', ()=>{
+      CURRENT_SORT = sortSelect.value
+      savePrefs()
+      renderProducts(ALL_PRODUCTS)
+    })
+  }
+  if(resetSort){
+    resetSort.addEventListener('click', ()=>{
+      CURRENT_SORT = 'default'
+      CURRENT_FILTER = null
+      savePrefs()
+      if(sortSelect) sortSelect.value = 'default'
+      renderProducts(ALL_PRODUCTS)
+    })
+  }
+
   let cart = loadCart()
+  setGlobalCart(cart)
   renderCart(cart, products)
   // fill product table if on shop page
   if(document.getElementById('product-table')) renderProductTable(products, cart)
+  // render checkout summary if on checkout page
+  if(document.getElementById('order-items')) renderCheckoutSummary(cart, products)
 
   function handleHash(){
     const hash = location.hash || '#home'
@@ -174,6 +263,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       e.preventDefault()
       const cat = left.textContent.trim()
       CURRENT_FILTER = (cat === 'All') ? null : cat
+      savePrefs()
       renderProducts(ALL_PRODUCTS)
       if(document.getElementById('product-table')) renderProductTable(ALL_PRODUCTS, cart)
       return
@@ -183,6 +273,17 @@ document.addEventListener('DOMContentLoaded', async ()=>{
       e.preventDefault()
       const cat = top.textContent.trim()
       CURRENT_FILTER = (cat === 'All products') ? null : cat
+      savePrefs()
+      renderProducts(ALL_PRODUCTS)
+      if(document.getElementById('product-table')) renderProductTable(ALL_PRODUCTS, cart)
+      return
+    }
+    const right = e.target.closest('.right-link')
+    if(right){
+      e.preventDefault()
+      const cat = right.textContent.trim()
+      CURRENT_FILTER = (cat === 'All') ? null : cat
+      savePrefs()
       renderProducts(ALL_PRODUCTS)
       if(document.getElementById('product-table')) renderProductTable(ALL_PRODUCTS, cart)
       return
@@ -205,6 +306,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
         saveCart(cart)
         renderCart(cart, ALL_PRODUCTS)
         if(document.getElementById('product-table')) renderProductTable(ALL_PRODUCTS, cart)
+        if(document.getElementById('order-items')) renderCheckoutSummary(cart, ALL_PRODUCTS)
         return
       }
       if(action){
@@ -212,9 +314,11 @@ document.addEventListener('DOMContentLoaded', async ()=>{
         if(action==='inc'){ cart[id] = (cart[id]||0)+1 }
         if(action==='dec'){ cart[id] = Math.max(0,(cart[id]||0)-1); if(cart[id]===0) delete cart[id] }
         if(action==='rem'){ delete cart[id] }
-        saveCart(cart)
+            saveCart(cart)
+            setGlobalCart(cart)
         renderCart(cart, ALL_PRODUCTS)
         if(document.getElementById('product-table')) renderProductTable(ALL_PRODUCTS, cart)
+        if(document.getElementById('order-items')) renderCheckoutSummary(cart, ALL_PRODUCTS)
         return
       }
     }
@@ -222,10 +326,16 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
   $('#checkout').addEventListener('click', ()=>{
     if(Object.keys(cart).length===0){ alert('Cart is empty') ; return }
-    const total = cartTotal(cart, products)
-    alert(`Thanks for your purchase! Total: $${formatPrice(total)}`)
-    cart = {}
-    saveCart(cart)
-    renderCart(cart, products)
+    if(location.pathname.endsWith('checkout.html')){
+      const total = cartTotal(cart, ALL_PRODUCTS)
+      alert(`Thanks for your purchase! Total: $${formatPrice(total)}`)
+      cart = {}
+      saveCart(cart)
+      renderCart(cart, ALL_PRODUCTS)
+      const thank = document.getElementById('thank-you')
+      if(thank) thank.classList.remove('hidden')
+      return
+    }
+    location.href = 'checkout.html'
   })
 })
